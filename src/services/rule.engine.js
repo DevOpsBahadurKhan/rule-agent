@@ -5,7 +5,7 @@ async function evaluateRules() {
     const cpu = await getCpuUsage();
     console.log("Current CPU:", cpu);
 
-    if (cpu > 80) {
+    if (cpu > 50) {
         console.log("CPU spike detected. Scaling...");
         await scaleDeployment("default", "nginx-deployment", 3);
     } else {
