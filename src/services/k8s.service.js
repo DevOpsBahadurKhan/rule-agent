@@ -1,6 +1,8 @@
-import { appsApi } from '../config/k8s.config.js';
+const { appsApi } = require('../config/k8s.config');
 
 async function scaleDeployment(namespace, name, replicas) {
+    console.log("Scaling deployment:", name);
+
     const patch = {
         spec: {
             replicas: replicas
@@ -8,17 +10,14 @@ async function scaleDeployment(namespace, name, replicas) {
     };
 
     await appsApi.patchNamespacedDeployment(
-        name,
-        namespace,
-        patch,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        { headers: { 'Content-Type': 'application/merge-patch+json' } }
+        {
+            name: name,
+            namespace: namespace,
+            body: patch
+        }
     );
 
     console.log(`Scaled ${name} to ${replicas} replicas`);
 }
 
-export { scaleDeployment };
+module.exports = { scaleDeployment };
