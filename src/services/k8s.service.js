@@ -5,6 +5,12 @@ export async function scaleDeployment(namespace, name, replicas) {
 
     try {
         const scaleBody = {
+            apiVersion: "autoscaling/v1",
+            kind: "Scale",
+            metadata: {
+                name: name,
+                namespace: namespace
+            },
             spec: {
                 replicas: replicas
             }
